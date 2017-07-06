@@ -1,0 +1,35 @@
+{
+  "name": "upvote",
+  "version": "0.0.1",
+  "description": "A better way to view your Reddit history",
+  "main": "N/A",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tkomiya24/upvote.git"
+  },
+  "keywords": [
+    "reddit",
+    "upvote",
+    "organize",
+    "sort",
+    "categorize",
+    "rails",
+    "node",
+    "webpack",
+    "react",
+    "redux",
+    "ruby"
+  ],
+  "author": "Takeru Komiya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tkomiya24/upvote/issues"
+  },
+  "homepage": "https://github.com/tkomiya24/upvote#readme"
+}

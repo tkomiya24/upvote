@@ -2,12 +2,12 @@ import React from 'react';
 
 const Home = () => {
   return (
-    <div>
-      <div>
+    <div className="home">
+      <div className="header">
         <h1>Upvote</h1>
-      </div>
-      <div>
-        A better way to view your Reddit history
+        <p>
+          A better way to view your Reddit history
+        </p>
       </div>
     </div>
   );

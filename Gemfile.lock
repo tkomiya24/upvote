@@ -172,7 +172,7 @@ DEPENDENCIES
   pg (~> 0.18)
   puma (~> 3.7)
   rails (~> 5.1.2)
-  rubocop
+  rubocop (~> 0.49.1)
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)

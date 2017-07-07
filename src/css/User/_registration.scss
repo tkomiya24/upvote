@@ -1,0 +1,6 @@
+.registration {
+  @include centered-container(200px, 300px);
+  form div {
+    margin: 5px;
+  }
+}

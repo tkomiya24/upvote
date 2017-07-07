@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -8,6 +9,9 @@ const Home = () => {
         <p>
           A better way to view your Reddit history
         </p>
+        <Link to="/register">
+          Register
+        </Link>
       </div>
     </div>
   );

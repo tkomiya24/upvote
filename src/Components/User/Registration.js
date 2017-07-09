@@ -1,22 +1,35 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import * as UserActions from '../../Actions/user';
 
-class Register extends React.Component {
+class Registration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: ''
-    }
+      email: '',
+      password: '',
+      password_confirmation: ''
+    };
     this.onChange = this.onChange.bind(this);
     this.register = this.register.bind(this);
   }
   render() {
     return (
-      <div className="registration">
+      <div className='registration'>
         <form onSubmit={this.register}>
-          <div><label>Username</label><input name="username" type="text" onChange={this.onChange} /></div>
-          <div><label>Password</label><input name="password" type="password" onChange={this.onChange} /></div>
-          <input type="submit" value="Go go go!" />
+          <div>
+            <label>Username</label>
+            <input name='email' type='text' onChange={this.onChange} />
+          </div>
+          <div>
+            <label>Password</label>
+            <input name='password' type='password' onChange={this.onChange} />
+          </div>
+          <div>
+            <label>Password confirmation</label>
+            <input name='password_confirmation' type='password' onChange={this.onChange} />
+          </div>
+          <input type='submit' value='Go go go!' />
         </form>
       </div>
     );
@@ -28,8 +41,33 @@ class Register extends React.Component {
   }
   register(event) {
     event.preventDefault();
-    alert(`This doesn't work yet, ${this.state.username}`);
+    this.props.register({
+      email: this.state.email,
+      password: this.state.password,
+      password_confirmation: this.state.password_confirmation
+    }).then(user => {
+      this.setState({
+        message: 'Success!!!'
+      });
+    }).catch(() => {
+      alert('Failed!');
+      this.setState({
+        message: 'Failed!! :('
+      });
+    });
   }
 }
 
-export default Register;
+Registration.propTypes = {
+  register: React.PropTypes.func.isRequired
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    register: user => {
+      return dispatch(UserActions.create(user));
+    }
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Registration);

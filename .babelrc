@@ -1,0 +1,7 @@
+/*
+This configuration is for tests only. Babel configuration for building
+the front end assets is done in webpack.config.
+*/
+{
+  "presets": ["es2015"]
+}

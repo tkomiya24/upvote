@@ -1,3 +1,5 @@
+/* eslint-env node, mocha */
+
 import fixture from './user';
 import chai from 'chai';
 

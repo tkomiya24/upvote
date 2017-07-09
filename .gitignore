@@ -16,3 +16,4 @@
 .byebug_history
 node_modules
 app/assets/javascripts/bundle.js
+npm-debug.log

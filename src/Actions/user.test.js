@@ -1,3 +1,5 @@
+/* eslint-env node, mocha */
+
 import chai from 'chai';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
@@ -11,7 +13,6 @@ chai.should();
 
 const mockStore = configureMockStore([thunk]);
 let stub;
-
 
 describe('User actions', function() {
   afterEach(() => {

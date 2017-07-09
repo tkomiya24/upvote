@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise_token_auth', '~> 0.1.42'
+gem 'omniauth', '~> 1.6.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

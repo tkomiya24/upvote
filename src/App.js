@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Route, BrowserRouter} from 'react-router-dom';
 
 import * as UserActions from './Actions/user';
-import {doesSessionExist} from './Services/Authentication';
+import {doesSessionExist, getAuthHeaders} from './Services/Authentication';
 
 import Home from './Components/Home';
 import Registration from './Components/User/Registration';
@@ -18,7 +18,8 @@ class App extends React.Component {
     this.handleRenewSession = this.handleRenewSession.bind(this);
     if (doesSessionExist() && !props.user) {
       this.state.renewingSession = true;
-      props.renewSession().then(this.handleRenewSession).catch(this.handleRenewSession);
+      props.renewSession(getAuthHeaders()).then(this.handleRenewSession)
+        .catch(this.handleRenewSession);
     }
   }
   render() {
@@ -59,8 +60,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    renewSession: () => {
-      return dispatch(UserActions.renewSession());
+    renewSession: (headers) => {
+      return dispatch(UserActions.renewSession(headers));
     }
   };
 }

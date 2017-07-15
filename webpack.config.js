@@ -1,5 +1,8 @@
 const path = require('path');
 
+if (process.env.NODE_ENV === 'production') {
+}
+
 module.exports = {
   entry: './src/entry.js',
   output: {

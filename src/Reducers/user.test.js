@@ -42,11 +42,11 @@ describe('User reducer', function() {
     });
   });
 
-  describe('CREATE_USER_SESSION_FAILED', function() {
+  describe('DESTROY_USER_SESSION', function() {
     it('should remove the headers and the user from the store', function() {
       stub = sinon.stub(Authentication, 'logout');
       const action = {
-        type: 'CREATE_USER_SESSION_FAILED'
+        type: 'DESTROY_USER_SESSION'
       };
       fixture({user}, action).should.deep.equal({user: null});
       stub.calledOnce.should.be.true;

@@ -56,6 +56,7 @@ describe('User actions', function() {
             headers
           }
         ]);
+        stub.calledWith(user).should.be.true;
       });
     });
   });
@@ -103,12 +104,57 @@ describe('User actions', function() {
       return store.dispatch(fixture.renewSession(oldHeaders)).then(() => {
         store.getActions().should.deep.equal([
           {
-            type: 'CREATE_USER_SESSION_FAILED'
+            type: 'DESTROY_USER_SESSION'
           }
         ]);
         stub.calledWith(oldHeaders).should.be.true;
       }).catch(() => {
         // The action throws.
+      });
+    });
+  });
+
+  describe('login', function() {
+    it('should call login API and dispatch a success with response and header', function() {
+      stub = sinon.stub(Api, 'login').callsFake(function(user) {
+        return new Promise((resolve, reject) => {
+          resolve({
+            body: {
+              data: user
+            },
+            headers
+          });
+        });
+      });
+
+      return store.dispatch(fixture.login(user)).then(() => {
+        store.getActions().should.deep.equal([
+          {
+            type: 'CREATE_USER_SESSION_SUCCESS',
+            user,
+            headers
+          }
+        ]);
+        stub.calledWith(user).should.be.true;
+      });
+    });
+  });
+
+  describe('logout', function() {
+    it('should call logout API and dispatch a logout success action ', function() {
+      stub = sinon.stub(Api, 'logout').callsFake(function() {
+        return new Promise((resolve, reject) => {
+          resolve();
+        });
+      });
+
+      return store.dispatch(fixture.logout()).then(() => {
+        store.getActions().should.deep.equal([
+          {
+            type: 'DESTROY_USER_SESSION'
+          }
+        ]);
+        stub.calledOnce.should.be.true;
       });
     });
   });

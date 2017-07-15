@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as UserActions from '../../Actions/user';
 
-class Registration extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,25 +12,21 @@ class Registration extends React.Component {
       password_confirmation: ''
     };
     this.onChange = this.onChange.bind(this);
-    this.register = this.register.bind(this);
+    this.login = this.login.bind(this);
   }
   render() {
     return (
       <div className="registration">
-        <form onSubmit={this.register}>
+        <form onSubmit={this.login}>
           <div>
-            <label>Username</label>
+            <label>Email</label>
             <input name="email" type="text" onChange={this.onChange} />
           </div>
           <div>
             <label>Password</label>
             <input name="password" type="password" onChange={this.onChange} />
           </div>
-          <div>
-            <label>Password confirmation</label>
-            <input name="password_confirmation" type="password" onChange={this.onChange} />
-          </div>
-          <input type="submit" value="Register" />
+          <input type="submit" value="Login" />
         </form>
       </div>
     );
@@ -39,9 +36,9 @@ class Registration extends React.Component {
       [event.target.name]: event.target.value
     });
   }
-  register(event) {
+  login(event) {
     event.preventDefault();
-    this.props.register({
+    this.props.login({
       email: this.state.email,
       password: this.state.password,
       password_confirmation: this.state.password_confirmation
@@ -59,17 +56,17 @@ class Registration extends React.Component {
   }
 }
 
-Registration.propTypes = {
-  register: React.PropTypes.func.isRequired,
-  history: React.PropTypes.object.isRequired
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    register: user => {
-      return dispatch(UserActions.create(user));
+    login: user => {
+      return dispatch(UserActions.login(user));
     }
   };
 }
 
-export default connect(null, mapDispatchToProps)(Registration);
+export default connect(null, mapDispatchToProps)(Login);

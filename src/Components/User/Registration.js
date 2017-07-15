@@ -49,17 +49,19 @@ class Registration extends React.Component {
       this.setState({
         message: 'Success!!!'
       });
-    }).catch(() => {
-      alert('Failed!');
+      this.props.history.push('logged_in');
+    }).catch((err) => {
       this.setState({
         message: 'Failed!! :('
       });
+      throw err;
     });
   }
 }
 
 Registration.propTypes = {
-  register: React.PropTypes.func.isRequired
+  register: React.PropTypes.func.isRequired,
+  history: React.PropTypes.object.isRequired
 };
 
 function mapDispatchToProps(dispatch) {

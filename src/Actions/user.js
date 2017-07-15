@@ -11,8 +11,8 @@ function createUserSuccess(user) {
 export function create(user) {
   return function(dispatch) {
     const promise = Api.create(user);
-    promise.then(user => {
-      dispatch(createUserSuccess(user));
+    promise.then(res => {
+      dispatch(createUserSuccess(res.body.data));
     });
     return promise;
   };

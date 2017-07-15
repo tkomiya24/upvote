@@ -21,9 +21,20 @@ describe('User actions', function() {
 
   describe('create', function() {
     it('should call create API and dispatch a success with the response', function() {
+      const headers = {
+        'access-token': '123abc456def',
+        client: 'client 123xyd',
+        uid: 'user 12383kdj',
+        expiry: 1234567
+      };
       stub = sinon.stub(Api, 'create').callsFake(function(user) {
         return new Promise((resolve, reject) => {
-          resolve(user);
+          resolve({
+            body: {
+              data: user
+            },
+            headers
+          });
         });
       });
       const user = {
@@ -36,7 +47,8 @@ describe('User actions', function() {
         store.getActions().should.deep.equal([
           {
             type: 'CREATE_USER_SUCCESS',
-            user
+            user,
+            headers
           }
         ]);
       });

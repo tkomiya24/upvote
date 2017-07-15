@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './src/entry.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './app/assets/javascripts')
@@ -22,7 +22,7 @@ module.exports = {
       },
       {
         test: /\.scss?/,
-        include:  [
+        include: [
           path.resolve(__dirname, 'src/css')
         ],
         use: [

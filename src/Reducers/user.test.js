@@ -11,31 +11,45 @@ chai.should();
 let stub;
 
 describe('User reducer', function() {
+  const user = {
+    id: 123,
+    username: 'takeru'
+  };
+
   afterEach(() => {
     stub.restore();
   });
 
-  it('CREATE_USER_SUCCESS', function() {
-    stub = sinon.stub(Authentication, 'login');
+  describe('CREATE_USER_SESSION_SUCCESS', function() {
+    it('should add the user to the store and store the headers', function() {
+      stub = sinon.stub(Authentication, 'login');
 
-    const user = {
-      id: 123,
-      username: 'takeru'
-    };
-    const headers = {
-      'access-token': '123abc456def',
-      client: 'client 123xyd',
-      uid: 'user 12383kdj',
-      expiry: 1234567
-    };
-    const action = {
-      user,
-      type: 'CREATE_USER_SUCCESS',
-      headers
-    };
-    fixture({}, action).should.deep.equal({
-      user
+      const headers = {
+        'access-token': '123abc456def',
+        client: 'client 123xyd',
+        uid: 'user 12383kdj',
+        expiry: 1234567
+      };
+      const action = {
+        user,
+        type: 'CREATE_USER_SESSION_SUCCESS',
+        headers
+      };
+      fixture({}, action).should.deep.equal({
+        user
+      });
+      stub.calledWith(headers).should.be.true;
     });
-    stub.calledWith(headers).should.be.true;
+  });
+
+  describe('CREATE_USER_SESSION_FAILED', function() {
+    it('should remove the headers and the user from the store', function() {
+      stub = sinon.stub(Authentication, 'logout');
+      const action = {
+        type: 'CREATE_USER_SESSION_FAILED'
+      };
+      fixture({user}, action).should.deep.equal({user: null});
+      stub.calledOnce.should.be.true;
+    });
   });
 });

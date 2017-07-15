@@ -49,7 +49,7 @@ class Registration extends React.Component {
       this.setState({
         message: 'Success!!!'
       });
-      this.props.history.push('logged_in');
+      this.props.history.push('/');
     }).catch((err) => {
       this.setState({
         message: 'Failed!! :('

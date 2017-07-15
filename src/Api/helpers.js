@@ -11,3 +11,19 @@ export function createPostRequest(endpoint, payload) {
     });
   });
 };
+
+export function createGetRequest(endpoint, params = {}) {
+  return new Promise((resolve, reject) => {
+    request
+      .get(endpoint)
+      .set('Accept', 'application/json')
+      .query(params)
+      .end((err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
+      });
+  });
+}

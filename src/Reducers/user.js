@@ -3,9 +3,12 @@ import * as Authentication from '../Services/Authentication';
 
 export default function(state = {}, action) {
   switch(action.type) {
-    case ActionTypes.CREATE_USER_SUCCESS:
+    case ActionTypes.CREATE_USER_SESSION_SUCCESS:
       Authentication.login(action.headers);
       return Object.assign({}, state, {user: action.user});
+    case ActionTypes.CREATE_USER_SESSION_FAILED:
+      Authentication.logout();
+      return Object.assign({}, state, {user: null});
     default:
       return state;
   }

@@ -15,21 +15,21 @@ class Registration extends React.Component {
   }
   render() {
     return (
-      <div className='registration'>
+      <div className="registration">
         <form onSubmit={this.register}>
           <div>
             <label>Username</label>
-            <input name='email' type='text' onChange={this.onChange} />
+            <input name="email" type="text" onChange={this.onChange} />
           </div>
           <div>
             <label>Password</label>
-            <input name='password' type='password' onChange={this.onChange} />
+            <input name="password" type="password" onChange={this.onChange} />
           </div>
           <div>
             <label>Password confirmation</label>
-            <input name='password_confirmation' type='password' onChange={this.onChange} />
+            <input name="password_confirmation" type="password" onChange={this.onChange} />
           </div>
-          <input type='submit' value='Go go go!' />
+          <input type="submit" value="Register" />
         </form>
       </div>
     );

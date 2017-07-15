@@ -9,14 +9,12 @@ import Home2 from './Components/User/Home';
 
 import './css/styles.scss';
 
-
-
 ReactDOM.render(
   <Provider store={Store}>
     <BrowserRouter>
-      <div className='application-container'>
-        <Route exact path='/' component={Home} />
-        <Route path='/register' component={Registration} />
+      <div className="application-container">
+        <Route exact path="/" component={Home} />
+        <Route path="/register" component={Registration} />
         <Route path="/logged_in" component={Home2} />
       </div>
     </BrowserRouter>

@@ -25,6 +25,7 @@
     "babel/generator-star-spacing": 1,
     "space-before-function-paren": "off",
     "keyword-spacing": "off",
-    "camelcase": 0
+    "camelcase": 0,
+    "jsx-quotes": ["error", "prefer-double"]
   }
 }

@@ -6,6 +6,9 @@ class Home extends React.Component {
     return (
       <div className="home">
         <h1>{this.props.user.email}</h1>
+        <a href="user/authorize_reddit">
+          Authorize your reddit account.
+        </a>
       </div>
     );
   }

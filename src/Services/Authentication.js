@@ -6,7 +6,11 @@ const UID = 'uid';
 const EXPIRY = 'expiry';
 
 export function doesSessionExist() {
-  return !!ls.get(ACCESS_TOKEN);
+  try {
+    return !!ls.get(ACCESS_TOKEN);
+  } catch (error) {
+    return false;
+  }
 }
 
 export function login(headers) {
@@ -24,12 +28,16 @@ export function logout() {
 }
 
 export function getAuthHeaders() {
-  return {
-    [ACCESS_TOKEN]: ls.get(ACCESS_TOKEN),
-    [CLIENT_ID]: ls.get(CLIENT_ID),
-    [UID]: ls.get(UID),
-    [EXPIRY]: ls.get(EXPIRY)
-  };
+  try {
+    return {
+      [ACCESS_TOKEN]: ls.get(ACCESS_TOKEN),
+      [CLIENT_ID]: ls.get(CLIENT_ID),
+      [UID]: ls.get(UID),
+      [EXPIRY]: ls.get(EXPIRY)
+    };
+  } catch(error) {
+    return {};
+  }
 }
 
 export function renewCredentials(headers) {

@@ -28,21 +28,22 @@ class UsersController < ActionController::Base
 
   def reddit_authorized_callback
     user = User.where(auth_string: params[:state]).first
-    return handle_error unless params[:code]
+    return handle_missing_code_error unless params[:code]
     return handle_not_found unless user
     begin
       access_token = get_authorization_token(params[:code])
     rescue RestClient::ExceptionWithResponse => e
       return render(json: e.response)
     end
-    if user.update(auth_token: access_token, auth_string: nil)
-      redirect_to('/authorized')
-    else
-      render(json: { message: 'Could not update your user. Please try again later' }, status: 500)
-    end
+    update_user_and_redirect(user, access_token)
   end
 
   private
+
+  def handle_missing_code_error
+    render(json: { message: 'There was trouble retrieving authorization from the Reddit server' },
+           status: 500)
+  end
 
   def get_authorization_token(code)
     payload = {
@@ -53,6 +54,14 @@ class UsersController < ActionController::Base
     resource = RestClient::Resource.new(ACCESS_TOKEN_URL, ENV['CLIENT_ID'], ENV['CLIENT_SECRET'])
     response = resource.post payload
     JSON.parse(response.body)['access_token']
+  end
+
+  def update_user_and_redirect(user, access_token)
+    if user.update(auth_token: access_token, auth_string: nil)
+      redirect_to('/authorized')
+    else
+      render(json: { message: 'Could not update your user. Please try again later' }, status: 500)
+    end
   end
 
   def handle_error

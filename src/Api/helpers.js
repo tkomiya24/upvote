@@ -1,5 +1,5 @@
 import request from 'superagent';
-import {getAuthHeaders} from '../Services/Authentication';
+import {getAuthHeaders, renewCredentials} from '../Services/Authentication';
 
 function getAndCheckAuthHeaders() {
   const headers = getAuthHeaders();

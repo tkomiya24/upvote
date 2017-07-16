@@ -35,7 +35,7 @@ class UsersController < ActionController::Base
     rescue RestClient::ExceptionWithResponse => e
       return render(json: e.response)
     end
-    if user.update(auth_code: access_token, auth_string: nil)
+    if user.update(auth_token: access_token, auth_string: nil)
       redirect_to('/authorized')
     else
       render(json: { message: 'Could not update your user. Please try again later' }, status: 500)

@@ -1,2 +1,4 @@
 Style/Documentation:
-  enabled: false
+  Enabled: false
+Metrics/LineLength:
+  Max: 100

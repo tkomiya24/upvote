@@ -1,16 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UpvotesShow = ({upvote}) => {
-  return (
-    <div>
-      <pre>
-        {JSON.stringify(upvote, null, 2)}
-      </pre>
-      <br />
-      <hr />
-    </div>
-  );
+class UpvotesShow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: false,
+      showJson: false
+    };
+    this.toggleExpansion = this.toggleExpansion.bind(this);
+    this.toggleShowJson = this.toggleShowJson.bind(this);
+  }
+  render() {
+    const data = this.props.upvote.data;
+    return (
+      <div className="upvote">
+        <div>
+          <h2>{data.title}</h2>
+          <h3>{data.subreddit_name_prefixed}</h3>
+          {data.thumbnail && data.thumbnail !== 'self' &&
+            <img src={decodeURI(data.thumbnail)} />
+          }
+        </div>
+        <div>
+          <button onClick={this.toggleExpansion}>Expand</button>
+          <button onClick={this.toggleShowJson}>Show JSON</button>
+        </div>
+        {this.state.showJson && <div>
+          <pre>
+            {data.preview ? JSON.stringify(data.preview, null, 2) : JSON.stringify(data, null, 2)}
+          </pre>
+        </div>}
+        {this.state.expanded && data.media && data.media.oembed &&
+          <div>
+            <img src={data.media.oembed.thumbnail_url} />
+          </div>
+        }
+        <br />
+        <hr />
+      </div>
+    );
+  }
+  toggleExpansion() {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  }
+  toggleShowJson() {
+    this.setState({
+      showJson: !this.state.showJson
+    });
+  }
 };
 
 UpvotesShow.propTypes = {

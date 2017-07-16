@@ -53,3 +53,22 @@ export function createSignedDeleteRequest(endpoint) {
       });
   });
 }
+
+export function createSignedGetRequest(endpoint, params = {}) {
+  return new Promise((resolve, reject) => {
+    request
+      .get(endpoint)
+      .set('Accept', 'application/json')
+      .set(getAndCheckAuthHeaders())
+      .query(params)
+      .end((err, res) => {
+        if (err) {
+          renewCredentials(err.response.header);
+          reject(err.response);
+        } else {
+          renewCredentials(res.header);
+          resolve(res.body);
+        }
+      });
+  });
+}

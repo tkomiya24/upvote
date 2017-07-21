@@ -20,10 +20,22 @@ class User < ActiveRecord::Base
   end
 
   def fetch_upvotes
-    response = RestClient.get "#{HISTORY_URL}/#{reddit_username}/upvoted",
-                              Authorization: "Bearer #{auth_token}"
-    upvotes = JSON.parse(response.body)['data']['children']
-    raise "Couldn't save JSON's" unless RedditDatum.from_json_array(self, upvotes)
-    upvotes
+    limit = 100
+    upvotes = []
+    after = ''
+    loop do
+      params = { type: 'links', limit: limit }
+      params[:after] = after unless after.blank?
+      response = RestClient.get "#{HISTORY_URL}/#{reddit_username}/upvoted",
+                                params: params,
+                                Authorization: "Bearer #{auth_token}"
+      new_upvotes = JSON.parse(response.body)['data']['children']
+      logger.info(new_upvotes)
+      upvotes.push(*new_upvotes)
+      break if new_upvotes.length < limit
+      after = "t3_#{upvotes.last['data']['id']}"
+      puts "After is now: #{after}"
+    end
+    raise "Couldn't save JSON's" unless RedditDatum.from_json_array(self, upvotes.reverse_each)
   end
 end

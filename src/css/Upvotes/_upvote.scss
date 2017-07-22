@@ -1,3 +1,22 @@
 .upvote {
   padding: 64px;
+  margin: 0 auto;
+  width: 800px;
+  .header {
+    h1, h2, h3 {
+      padding: 6px 48px;
+    }
+  }
+  .controls {
+    text-align: center;
+  }
+  .raw {
+    padding: 0 64px;
+    pre {
+      overflow-x: scroll;
+    }
+  }
+  .divider {
+    padding-top: 48px;
+  }
 }

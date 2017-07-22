@@ -26,7 +26,7 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <div className="home">
+      <div>
         <h1>{this.props.user.email}</h1>
         <div className="filter-controls">
           {this.state.filterValues.map(filterValue => {

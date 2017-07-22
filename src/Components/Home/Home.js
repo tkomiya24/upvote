@@ -13,7 +13,7 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="authenticated-home">
         <h1>{this.props.user.email}</h1>
         {this.props.user.reddit_username
           ? <Upvotes

@@ -32,13 +32,11 @@ class UpvotesShow extends React.Component {
         </div>
         {this.state.showJson && <div className="raw">
           <pre>
-            {data.preview ? JSON.stringify(data.preview, null, 2) : JSON.stringify(data, null, 2)}
+            {JSON.stringify(data, null, 2)}
           </pre>
         </div>}
         {this.state.expanded && data.media && data.media.oembed &&
-          <div>
-            <img src={data.media.oembed.thumbnail_url} />
-          </div>
+          <div dangerouslySetInnerHTML={{__html: data.media.oembed.html}} />
         }
         <br />
         <div className="divider">

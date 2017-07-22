@@ -25,27 +25,33 @@ class UpvotesIndex extends React.Component {
   render() {
     const upvotes = this.props.upvotes || [];
     return (
-      <div>
+      <div className="upvotes">
         <div className="filter-controls">
-          {this.state.filterValues.map(filterValue => {
+          <ul>
+            {this.state.filterValues.map(filterValue => {
+              return (
+                <li
+                  key={filterValue}>
+                  <button
+                    onClick={() => { this.changeFilterValue(filterValue); }}>
+                    {filterValue}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div className="upvotes-container">
+          {upvotes.map((upvote, index) => {
+            if (this.state.subredditFilter &&
+                this.state.subredditFilter !== upvote.data.subreddit_name_prefixed) {
+              return null;
+            }
             return (
-              <button
-                key={filterValue}
-                onClick={() => { this.changeFilterValue(filterValue); }}>
-                {filterValue}
-              </button>
+              <Show key={index} upvote={upvote} />
             );
           })}
         </div>
-        {upvotes.map((upvote, index) => {
-          if (this.state.subredditFilter &&
-              this.state.subredditFilter !== upvote.data.subreddit_name_prefixed) {
-            return null;
-          }
-          return (
-            <Show key={index} upvote={upvote} />
-          );
-        })}
       </div>
     );
   }
@@ -57,8 +63,7 @@ class UpvotesIndex extends React.Component {
 };
 
 UpvotesIndex.propTypes = {
-  upvotes: PropTypes.arrayOf(PropTypes.object),
-  subredditFilter: PropTypes.string
+  upvotes: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default UpvotesIndex;

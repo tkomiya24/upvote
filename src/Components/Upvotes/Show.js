@@ -16,11 +16,15 @@ class UpvotesShow extends React.Component {
     return (
       <div className="upvote">
         <div className="header">
-          <h2>{data.title}</h2>
-          <h3>{data.subreddit_name_prefixed}</h3>
-          {data.thumbnail && data.thumbnail !== 'self' &&
-            <img src={decodeURI(data.thumbnail)} />
-          }
+          <div className="thumbnail">
+            {data.thumbnail && data.thumbnail !== 'self' &&
+              <img src={decodeURI(data.thumbnail)} />
+            }
+          </div>
+          <div className="title">
+            <h2>{data.title}</h2>
+            <h3>{data.subreddit_name_prefixed}</h3>
+          </div>
         </div>
         <div className="controls">
           <button onClick={this.toggleExpansion}>Expand</button>

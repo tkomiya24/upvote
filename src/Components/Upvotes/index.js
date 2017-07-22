@@ -38,8 +38,8 @@ class UpvotesIndex extends React.Component {
           })}
         </div>
         {upvotes.map((upvote, index) => {
-          if (this.props.subredditFilter &&
-              this.props.subredditFilter !== upvote.data.subreddit_name_prefixed) {
+          if (this.state.subredditFilter &&
+              this.state.subredditFilter !== upvote.data.subreddit_name_prefixed) {
             return null;
           }
           return (

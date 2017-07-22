@@ -3,8 +3,13 @@
   margin: 0 auto;
   width: 800px;
   .header {
+    padding: 0 16px;
+    .thumbnail {
+      float: left;
+      margin-right: 24px;
+    }
     h1, h2, h3 {
-      padding: 6px 48px;
+      padding: 6px 32px;
     }
   }
   .controls {

@@ -185,5 +185,24 @@ describe('User actions', function() {
         stub.calledOnce.should.be.true;
       });
     });
+
+    describe('archiveNew', function() {
+      it('should call archive new API and dispatch a success action', function() {
+        stub = sinon.stub(Api, 'archiveUpvotes').callsFake(function() {
+          return new Promise((resolve, reject) => {
+            resolve();
+          });
+        });
+
+        return store.dispatch(fixture.archiveUpvotes()).then(() => {
+          store.getActions().should.deep.equal([
+            {
+              type: 'ARCHIVE_UPVOTES_SUCCESS'
+            }
+          ]);
+          stub.calledOnce.should.be.true;
+        });
+      });
+    });
   });
 });

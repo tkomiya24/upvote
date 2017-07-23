@@ -73,3 +73,15 @@ export function getUpvotes() {
     return promise;
   };
 }
+
+export function archiveUpvotes() {
+  return function(dispatch) {
+    const promise = Api.archiveUpvotes();
+    promise.then(() => {
+      dispatch({
+        type: ActionTypes.ARCHIVE_UPVOTES_SUCCESS
+      });
+    });
+    return promise;
+  };
+}

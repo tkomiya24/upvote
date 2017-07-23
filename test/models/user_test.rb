@@ -7,12 +7,9 @@ class UserTest < ActiveSupport::TestCase
 
   test 'fetch username and update model with value' do
     new_username = 'Namey McNameface'
-    expected_authorization = "Bearer #{users(:takeru).auth_token}"
     expected_url = 'https://oauth.reddit.com/api/v1/me'
-    RestClient.expects(:get).with(expected_url, Authorization: expected_authorization).once
-              .returns({
-                'name' => new_username
-              }.to_json)
+    stub_api(expected_url, { 'name' => new_username }.to_json,
+             Authorization: "Bearer #{users(:takeru).auth_token}")
 
     users(:takeru).fetch_username
 
@@ -21,39 +18,25 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'fetch_upvotes successful retrieval with less than 100 results' do
-    response = mock
-    response.stubs(:body).returns({
-      data: {
-        children: [
-          {
-            id: 1
-          },
-          {
-            id: 2
-          }
-        ]
-      }
-    }.to_json)
+    response = create_mock_response_object(
+      create_mock_upvotes_response(create_mock_upvote_data_with_range(1..2))
+    )
+
     user = users(:takeru)
     stub_api(UPVOTES_API_URL, response, params: { type: 'links', limit: 100 },
                                         Authorization: "Bearer #{user.auth_token}")
-    RedditDatum.expects(:from_json_array).once.with(user, [{ 'id' => 2 }, { 'id' => 1 }])
+    RedditDatum.expects(:from_json_array).once.with(user, create_mock_upvote_data_with_range(1..2).reverse)
                .returns(true)
 
     user.fetch_upvotes
   end
 
   test 'fetch_upvotes successful retrieval with more than 100 results' do
-    response = mock
-    children = []
-    (1..100).each do |i|
-      children.push('data' => { 'id' => i })
-    end
-    response2 = mock
-    children2 = [{ 'data' => { 'id' => 101 } }, { 'data' => { 'id' => 102 } }]
+    children = create_mock_upvote_data_with_range((1..100))
+    children2 = create_mock_upvote_data_with_range((101..102))
+    response = create_mock_response_object(create_mock_upvotes_response(children))
+    response2 = create_mock_response_object(create_mock_upvotes_response(children2))
 
-    response.stubs(:body).returns({ 'data' => { 'children' => children } }.to_json)
-    response2.stubs(:body).returns({ 'data' => { 'children' => children2 } }.to_json)
     user = users(:takeru)
     expected_authorization = "Bearer #{user.auth_token}"
     stub_api(UPVOTES_API_URL, response, params: { type: 'links', limit: 100 },

@@ -1,13 +1,12 @@
 .upvote {
   padding: 64px;
+  .container {
+    padding: 6px 32px;
+  }
   .header {
-    padding: 0 16px;
     .thumbnail {
       float: left;
       margin-right: 24px;
-    }
-    h1, h2, h3 {
-      padding: 6px 32px;
     }
   }
   .controls {
@@ -21,5 +20,12 @@
   }
   .divider {
     padding-top: 48px;
+  }
+  .content {
+    padding: 32px;
+    clear: both;
+  }
+  .media {
+    text-align: center;
   }
 }

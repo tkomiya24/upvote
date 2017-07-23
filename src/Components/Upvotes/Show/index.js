@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Content from './Content';
+
 class UpvotesShow extends React.Component {
   constructor(props) {
     super(props);
@@ -15,30 +17,30 @@ class UpvotesShow extends React.Component {
     const data = this.props.upvote.data;
     return (
       <div className="upvote">
-        <div className="header">
-          <div className="thumbnail">
-            {data.thumbnail && data.thumbnail !== 'self' &&
-              <img src={decodeURI(data.thumbnail)} />
-            }
+        <div className="container">
+          <div className="header">
+            <div className="thumbnail">
+              {data.thumbnail && data.thumbnail !== 'self' &&
+                <img src={decodeURI(data.thumbnail)} />
+              }
+            </div>
+            <div className="title">
+              <h2>{data.title}</h2>
+              <h3>{data.subreddit_name_prefixed}</h3>
+            </div>
           </div>
-          <div className="title">
-            <h2>{data.title}</h2>
-            <h3>{data.subreddit_name_prefixed}</h3>
+          <div className="controls">
+            <button onClick={this.toggleExpansion}>Expand</button>
+            <button onClick={this.toggleShowJson}>Show JSON</button>
           </div>
+          {this.state.showJson && <div className="raw">
+            <pre>
+              {JSON.stringify(data, null, 2)}
+            </pre>
+          </div>}
+          {this.state.expanded && <Content data={data} />}
+          <br />
         </div>
-        <div className="controls">
-          <button onClick={this.toggleExpansion}>Expand</button>
-          <button onClick={this.toggleShowJson}>Show JSON</button>
-        </div>
-        {this.state.showJson && <div className="raw">
-          <pre>
-            {JSON.stringify(data, null, 2)}
-          </pre>
-        </div>}
-        {this.state.expanded && data.media && data.media.oembed &&
-          <div dangerouslySetInnerHTML={{__html: data.media.oembed.html}} />
-        }
-        <br />
         <div className="divider">
           <hr />
         </div>

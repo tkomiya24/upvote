@@ -52,6 +52,14 @@ class UsersController < ActionController::Base
     render(json: { message: e }, status: 500)
   end
 
+  def archive_all
+    current_user.reddit_data.destroy_all
+    current_user.fetch_upvotes
+    render(json: { message: 'Success!' }, status: 200)
+  rescue StandardError => e
+    render(json: { message: e }, status: 500)
+  end
+
   private
 
   def handle_missing_code_error

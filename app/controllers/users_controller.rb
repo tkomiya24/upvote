@@ -4,7 +4,7 @@ require 'securerandom'
 require 'rest-client'
 
 class UsersController < ActionController::Base
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:reddit_authorized_callback]
   TYPE = 'code'.freeze
   URI = 'http://localhost:3000/users/reddit_authorized_callback'.freeze
   DURATION = 'permanent'.freeze
@@ -29,7 +29,7 @@ class UsersController < ActionController::Base
   def reddit_authorized_callback
     user = User.where(auth_string: params[:state]).first
     return handle_missing_code_error unless params[:code]
-    return handle_not_found unless user
+    return handle_code_match_error unless user
     begin
       access_token = get_authorization_token(params[:code])
     rescue RestClient::ExceptionWithResponse => e
@@ -93,5 +93,9 @@ class UsersController < ActionController::Base
 
   def create_redirect_url(random_string)
     sprintf(AUTH_URL, random_string)
+  end
+
+  def handle_code_match_error
+    redirect_to('/authorization_error')
   end
 end

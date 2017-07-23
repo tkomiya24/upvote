@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import * as UserActions from '../../../Actions/user';
+
 import UI from './UI';
 
 class UpvotesIndex extends React.Component {
@@ -10,6 +13,7 @@ class UpvotesIndex extends React.Component {
       subredditFilter: ''
     };
     this.changeFilterValue = this.changeFilterValue.bind(this);
+    props.getUpvotes().then();
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.upvotes !== this.props.upvotes) {
@@ -40,7 +44,22 @@ class UpvotesIndex extends React.Component {
 };
 
 UpvotesIndex.propTypes = {
-  upvotes: PropTypes.arrayOf(PropTypes.object)
+  upvotes: PropTypes.arrayOf(PropTypes.object),
+  getUpvotes: PropTypes.func.isRequired,
 };
 
-export default UpvotesIndex;
+function mapStateToProps(state) {
+  return {
+    upvotes: state.redditData
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getUpvotes: () => {
+      return dispatch(UserActions.getUpvotes());
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpvotesIndex);

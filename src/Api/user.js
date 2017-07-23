@@ -15,3 +15,11 @@ export function login(user) {
 export function logout() {
   return Helpers.createSignedDeleteRequest('auth/sign_out');
 }
+
+export function getUpvotes() {
+  return Helpers.createSignedGetRequest('user/upvotes');
+}
+
+export function archiveUpvotes() {
+  return Helpers.createSignedPostRequest('user/archive_new');
+}

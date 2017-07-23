@@ -1,5 +1,5 @@
 import request from 'superagent';
-import {getAuthHeaders} from '../Services/Authentication';
+import {getAuthHeaders, renewCredentials} from '../Services/Authentication';
 
 function getAndCheckAuthHeaders() {
   const headers = getAuthHeaders();
@@ -49,6 +49,44 @@ export function createSignedDeleteRequest(endpoint) {
           reject(err.response);
         } else {
           resolve(res);
+        }
+      });
+  });
+}
+
+export function createSignedGetRequest(endpoint, params = {}) {
+  return new Promise((resolve, reject) => {
+    request
+      .get(endpoint)
+      .set('Accept', 'application/json')
+      .set(getAndCheckAuthHeaders())
+      .query(params)
+      .end((err, res) => {
+        if (err) {
+          renewCredentials(err.response.header);
+          reject(err.response);
+        } else {
+          renewCredentials(res.header);
+          resolve(res.body);
+        }
+      });
+  });
+}
+
+export function createSignedPostRequest(endpoint, payload) {
+  return new Promise((resolve, reject) => {
+    request
+      .post(endpoint)
+      .send(payload)
+      .set(getAndCheckAuthHeaders())
+      .type('application/json')
+      .end((err, res) => {
+        if (err) {
+          renewCredentials(err.response.header);
+          reject(err.response);
+        } else {
+          renewCredentials(res.header);
+          resolve(res.body);
         }
       });
   });

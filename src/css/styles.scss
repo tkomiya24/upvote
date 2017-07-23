@@ -1,8 +1,20 @@
 @import "mixins";
 @import "User/index";
+@import "Upvotes/index";
+@import "Home/index";
+
+html {
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+}
 
 html, body, #react-root, .application-container {
   height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
   padding: 0;
   margin: 0;
 }

@@ -8,7 +8,7 @@ class UsersController < ActionController::Base
   TYPE = 'code'.freeze
   URI = 'http://localhost:3000/users/reddit_authorized_callback'.freeze
   DURATION = 'permanent'.freeze
-  SCOPE_STRING = 'history'.freeze
+  SCOPE_STRING = 'history identity'.freeze
   AUTH_URL = 'https://www.reddit.com/api/v1/authorize'
              .concat("?client_id=#{ENV['CLIENT_ID']}&response_type=#{TYPE}")
              .concat("&state=%s&redirect_uri=#{URI}")
@@ -33,9 +33,31 @@ class UsersController < ActionController::Base
     begin
       access_token = get_authorization_token(params[:code])
     rescue RestClient::ExceptionWithResponse => e
-      return render(json: e.response)
+      return render(json: e.response.body)
     end
     update_user_and_redirect(user, access_token)
+  end
+
+  def upvotes
+    upvotes = current_user.reddit_data.map do |datum|
+      datum.as_json(only: [:raw_json])['raw_json']
+    end
+    render(json: upvotes)
+  end
+
+  def archive_new
+    current_user.fetch_new_upvotes
+    render(json: { message: 'Success!' }, status: 200)
+  rescue StandardError => e
+    render(json: { message: e }, status: 500)
+  end
+
+  def archive_all
+    current_user.reddit_data.destroy_all
+    current_user.fetch_upvotes
+    render(json: { message: 'Success!' }, status: 200)
+  rescue StandardError => e
+    render(json: { message: e }, status: 500)
   end
 
   private

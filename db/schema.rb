@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716011156) do
+ActiveRecord::Schema.define(version: 20170716032921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "reddit_data", force: :cascade do |t|
+    t.json "raw_json", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reddit_data_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
@@ -40,6 +48,7 @@ ActiveRecord::Schema.define(version: 20170716011156) do
     t.datetime "updated_at", null: false
     t.string "auth_string"
     t.string "auth_token"
+    t.string "reddit_username"
     t.index ["auth_string"], name: "index_users_on_auth_string"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

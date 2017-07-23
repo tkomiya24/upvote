@@ -1,0 +1,41 @@
+@import "upvote";
+
+$filter-control-width: 300px;
+
+.upvotes {
+  height: 100%;
+  position: relative;
+  .filter-controls {
+    width: $filter-control-width;
+    overflow-y: scroll;
+    float: left;
+    height: 100%;
+    position: fixed;
+    ul, li {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+    ul {
+      list-style: none;
+      button {
+        text-align: left;
+        background-color: inherit;
+        border: 0px;
+        font-size: 16px;
+        padding: 12px 24px;
+        cursor: pointer;
+        width: 100%;
+      }
+      button:hover {
+        color: white;
+        background-color: black;
+      }
+    }
+  }
+  .upvotes-container {
+    width: 800px;
+    margin-left: $filter-control-width;
+    height: 100%;
+  }
+}

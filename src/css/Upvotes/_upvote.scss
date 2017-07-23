@@ -1,0 +1,31 @@
+.upvote {
+  padding: 64px;
+  .container {
+    padding: 6px 32px;
+  }
+  .header {
+    .thumbnail {
+      float: left;
+      margin-right: 24px;
+    }
+  }
+  .controls {
+    text-align: center;
+  }
+  .raw {
+    padding: 0 64px;
+    pre {
+      overflow-x: scroll;
+    }
+  }
+  .divider {
+    padding-top: 48px;
+  }
+  .content {
+    padding: 32px;
+    clear: both;
+  }
+  .media {
+    text-align: center;
+  }
+}

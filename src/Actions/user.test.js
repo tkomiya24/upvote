@@ -26,6 +26,14 @@ describe('User actions', function() {
     email: 'hi@hello.com',
     password: 'password'
   };
+  const upvotes = [
+    {
+      id: 123
+    },
+    {
+      id: 456
+    }
+  ];
 
   beforeEach(() => {
     store = mockStore();
@@ -141,7 +149,7 @@ describe('User actions', function() {
   });
 
   describe('logout', function() {
-    it('should call logout API and dispatch a logout success action ', function() {
+    it('should call logout API and dispatch a logout success action', function() {
       stub = sinon.stub(Api, 'logout').callsFake(function() {
         return new Promise((resolve, reject) => {
           resolve();
@@ -155,6 +163,45 @@ describe('User actions', function() {
           }
         ]);
         stub.calledOnce.should.be.true;
+      });
+    });
+  });
+
+  describe('getUpvotes', function() {
+    it('should call upvotes API and dispatch a get success action', function() {
+      stub = sinon.stub(Api, 'getUpvotes').callsFake(function() {
+        return new Promise((resolve, reject) => {
+          resolve(upvotes);
+        });
+      });
+
+      return store.dispatch(fixture.getUpvotes()).then(() => {
+        store.getActions().should.deep.equal([
+          {
+            type: 'GET_UPVOTES_SUCCESS',
+            upvotes
+          }
+        ]);
+        stub.calledOnce.should.be.true;
+      });
+    });
+
+    describe('archiveNew', function() {
+      it('should call archive new API and dispatch a success action', function() {
+        stub = sinon.stub(Api, 'archiveUpvotes').callsFake(function() {
+          return new Promise((resolve, reject) => {
+            resolve();
+          });
+        });
+
+        return store.dispatch(fixture.archiveUpvotes()).then(() => {
+          store.getActions().should.deep.equal([
+            {
+              type: 'ARCHIVE_UPVOTES_SUCCESS'
+            }
+          ]);
+          stub.calledOnce.should.be.true;
+        });
       });
     });
   });

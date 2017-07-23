@@ -15,6 +15,13 @@ function createSessionFailed() {
   };
 }
 
+function getUpvotesSuccess(upvotes) {
+  return {
+    type: ActionTypes.GET_UPVOTES_SUCCESS,
+    upvotes
+  };
+}
+
 export function create(user) {
   return function(dispatch) {
     const promise = Api.create(user);
@@ -52,6 +59,28 @@ export function logout() {
     const promise = Api.logout();
     promise.then(res => {
       dispatch(createSessionFailed());
+    });
+    return promise;
+  };
+}
+
+export function getUpvotes() {
+  return function(dispatch) {
+    const promise = Api.getUpvotes();
+    promise.then(res => {
+      dispatch(getUpvotesSuccess(res));
+    });
+    return promise;
+  };
+}
+
+export function archiveUpvotes() {
+  return function(dispatch) {
+    const promise = Api.archiveUpvotes();
+    promise.then(() => {
+      dispatch({
+        type: ActionTypes.ARCHIVE_UPVOTES_SUCCESS
+      });
     });
     return promise;
   };

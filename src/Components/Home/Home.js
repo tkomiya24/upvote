@@ -1,21 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import Upvotes from '../Upvotes/Index';
 
 class Home extends React.Component {
   render() {
     return (
-      <div className="home">
+      <div className="authenticated-home">
         <h1>{this.props.user.email}</h1>
-        <a href="user/authorize_reddit">
-          Authorize your reddit account.
-        </a>
+        {this.props.user.reddit_username
+          ? <Upvotes />
+          : <a href="user/authorize_reddit">
+            Authorize your reddit account.
+          </a>}
       </div>
     );
   }
 };
 
 Home.propTypes = {
-  user: React.PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

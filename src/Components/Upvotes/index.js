@@ -18,7 +18,7 @@ class UpvotesIndex extends React.Component {
           return upvote.data.subreddit_name_prefixed;
         }).filter((element, index, self) => {
           return index === self.indexOf(element);
-        })
+        }).sort()
       });
     }
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as UserActions from '../../Actions/user';
-import Upvotes from '../Upvotes';
+import Upvotes from '../Upvotes/Index';
 
 class Home extends React.Component {
   constructor(props) {

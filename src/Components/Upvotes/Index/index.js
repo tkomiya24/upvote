@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Show from './Show';
+import Show from '../Show';
 
 class UpvotesIndex extends React.Component {
   constructor(props) {

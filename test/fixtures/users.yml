@@ -1,0 +1,5 @@
+takeru:
+  email: tkomiya@test.com
+  encrypted_password: <%= BCrypt::Password.create("password", cost: 10) %>
+  reddit_username: takeru
+  auth_token: abc-123-def-456

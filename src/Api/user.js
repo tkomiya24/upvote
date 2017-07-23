@@ -19,3 +19,7 @@ export function logout() {
 export function getUpvotes() {
   return Helpers.createSignedGetRequest('user/upvotes');
 }
+
+export function archiveUpvotes() {
+  return Helpers.createSignedPostRequest('user/archive_new');
+}

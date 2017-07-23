@@ -72,3 +72,22 @@ export function createSignedGetRequest(endpoint, params = {}) {
       });
   });
 }
+
+export function createSignedPostRequest(endpoint, payload) {
+  return new Promise((resolve, reject) => {
+    request
+      .post(endpoint)
+      .send(payload)
+      .set(getAndCheckAuthHeaders())
+      .type('application/json')
+      .end((err, res) => {
+        if (err) {
+          renewCredentials(err.response.header);
+          reject(err.response);
+        } else {
+          renewCredentials(res.header);
+          resolve(res.body);
+        }
+      });
+  });
+}

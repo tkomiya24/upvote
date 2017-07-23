@@ -45,6 +45,13 @@ class UsersController < ActionController::Base
     render(json: upvotes)
   end
 
+  def archive_new
+    current_user.fetch_new_upvotes
+    render(json: { message: 'Success!' }, status: 200)
+  rescue StandardError => e
+    render(json: { message: e }, status: 500)
+  end
+
   private
 
   def handle_missing_code_error

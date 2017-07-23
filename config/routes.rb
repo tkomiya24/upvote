@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resource :user, only: [] do
     get 'authorize_reddit', on: :member
     get 'upvotes'
+    post 'archive_new'
   end
   root 'application#index'
   match '*path', to: 'application#index', via: :get

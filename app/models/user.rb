@@ -15,7 +15,6 @@ class User < ActiveRecord::Base
 
   def fetch_username
     response = RestClient.get IDENTITY_URL, Authorization: "Bearer #{auth_token}"
-    logger.info(response)
     update(reddit_username: JSON.parse(response)['name'])
   end
 
@@ -34,7 +33,7 @@ class User < ActiveRecord::Base
       break if new_upvotes.length < limit
       after = "t3_#{upvotes.last['data']['id']}"
     end
-    raise "Couldn't save JSON's" unless RedditDatum.from_json_array(self, upvotes.reverse_each)
+    raise "Couldn't save JSON's" unless RedditDatum.from_json_array(self, upvotes.reverse)
   end
 
   def fetch_new_upvotes

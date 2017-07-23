@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
                                 params: params,
                                 Authorization: "Bearer #{auth_token}"
       new_upvotes = JSON.parse(response.body)['data']['children']
-      upvotes.push(*new_upvotes.reverse_each)
+      upvotes.push(*new_upvotes.reverse)
       break if new_upvotes.length < limit
       before = "t3_#{new_upvotes.first['data']['id']}"
     end

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Show from '../Show';
+import UI from './UI';
 
 class UpvotesIndex extends React.Component {
   constructor(props) {
@@ -25,34 +25,11 @@ class UpvotesIndex extends React.Component {
   render() {
     const upvotes = this.props.upvotes || [];
     return (
-      <div className="upvotes">
-        <div className="filter-controls">
-          <ul>
-            {this.state.filterValues.map(filterValue => {
-              return (
-                <li
-                  key={filterValue}>
-                  <button
-                    onClick={() => { this.changeFilterValue(filterValue); }}>
-                    {filterValue}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="upvotes-container">
-          {upvotes.map((upvote, index) => {
-            if (this.state.subredditFilter &&
-                this.state.subredditFilter !== upvote.data.subreddit_name_prefixed) {
-              return null;
-            }
-            return (
-              <Show key={index} upvote={upvote} />
-            );
-          })}
-        </div>
-      </div>
+      <UI
+        upvotes={upvotes}
+        onFilterChange={this.changeFilterValue}
+        subredditFilter={this.state.subredditFilter}
+        filters={this.state.filterValues} />
     );
   }
   changeFilterValue(filterValue) {

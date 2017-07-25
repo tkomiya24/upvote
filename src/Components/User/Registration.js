@@ -18,7 +18,7 @@ class Registration extends React.Component {
       <div className="registration">
         <form onSubmit={this.register}>
           <div>
-            <label>Username</label>
+            <label>E-mail</label>
             <input name="email" type="text" onChange={this.onChange} />
           </div>
           <div>
@@ -26,7 +26,7 @@ class Registration extends React.Component {
             <input name="password" type="password" onChange={this.onChange} />
           </div>
           <div>
-            <label>Password confirmation</label>
+            <label>Password Confirmation</label>
             <input name="password_confirmation" type="password" onChange={this.onChange} />
           </div>
           <input type="submit" value="Register" />

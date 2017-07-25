@@ -3,7 +3,7 @@ import React from 'react';
 const AuthError = () => {
   return (
     <div>
-      Your request to Reddit to authorize this app was denied.
+      Sorry, we had trouble trying to authorize your reddit acount. Please try again later.
     </div>
   );
 };

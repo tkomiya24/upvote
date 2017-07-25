@@ -6,7 +6,7 @@ require 'rest-client'
 class UsersController < ActionController::Base
   before_action :authenticate_user!, except: [:reddit_authorized_callback]
   TYPE = 'code'.freeze
-  URI = 'http://localhost:3000/users/reddit_authorized_callback'.freeze
+  URI = ENV['REDDIT_CALLBACK_URL'] + 'users/reddit_authorized_callback'.freeze
   DURATION = 'permanent'.freeze
   SCOPE_STRING = 'history identity'.freeze
   AUTH_URL = 'https://www.reddit.com/api/v1/authorize'
